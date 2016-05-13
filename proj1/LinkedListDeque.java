@@ -45,14 +45,33 @@ public class LinkedListDeque<Item> {
         end = sentinel.next;
       }
       sentinel.prev = end;
+    } else {
+      Node oldFrontNode = sentinel.next;
+      Node newNode = new Node(toAdd, sentinel, oldFrontNode);
+      sentinel.next = newNode;
+      size++;
     }
-    Node oldFrontNode = sentinel.next;
-    Node newNode = new Node(toAdd, sentinel, oldFrontNode);
-    sentinel.next = newNode;
-    size++;
   }
 
+  //change sentinel.prev to point to new Node
+  //find last node and set to OldLast
+  //OldLast.next = newNode
   public void addLast(Item toAdd) {
+    //If empty list.
+    if (sentinel.next == null) {
+      sentinel.next = new Node(toAdd, sentinel, null);
+      //Point sentinel.prev to end of list
+      Node end = sentinel;
+      while (sentinel.next != null) {
+        end = sentinel.next;
+      }
+      sentinel.prev = end;
+    } else {
+      Node oldLastNode = sentinel.prev;
+      Node newNode = new Node(toAdd, oldLastNode, sentinel);
+      sentinel.prev = newNode;
+      size++;
+    }
 
   }
 
@@ -73,7 +92,7 @@ public class LinkedListDeque<Item> {
   }
 
   public Item removeFirst() {
-    
+
   }
 
   public Item removeLast() {
