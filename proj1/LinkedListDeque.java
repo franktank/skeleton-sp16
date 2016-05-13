@@ -93,7 +93,7 @@ public class LinkedListDeque<Item> {
     } else {
       printThis = sentinel;
       while (printThis.next != sentinel) {
-        System.out.println("Item: " + sentinel.item);
+        System.out.println("Item: " + printThis.item);
         printThis = printThis.next;
       }
     }
