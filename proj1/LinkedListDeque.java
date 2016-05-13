@@ -88,7 +88,15 @@ public class LinkedListDeque<Item> {
   }
 
   public void printDeque() {
-
+    if (sentinel.next == null) {
+      System.out.println("Empty List!");
+    } else {
+      printThis = sentinel;
+      while (printThis.next != sentinel) {
+        System.out.println("Item: " + sentinel.item);
+        printThis = printThis.next;
+      }
+    }
   }
 
   public Item removeFirst() {
@@ -100,6 +108,8 @@ public class LinkedListDeque<Item> {
   }
 
   public Item get(int index) {
+    while (sentinel.next != sentinel) {
 
+    }
   }
  }
