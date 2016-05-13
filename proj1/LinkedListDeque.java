@@ -108,6 +108,16 @@ public class LinkedListDeque<Item> {
   */
   public Item removeFirst() {
 
+    if (sentinel.next == null) {
+      System.out.println("Empty list!");
+    } else {
+      firstNode = sentinel.next;
+      sentinel.next = firstNode.next;
+      firstNode.next.prev = sentinel;
+      firstNode.item = null;
+      firstNode = firstNode.next;
+    }
+
   }
 
   /**
@@ -118,7 +128,11 @@ public class LinkedListDeque<Item> {
   last = sentinel.prev;
   */
   public Item removeLast() {
-
+    lastNode = sentinel.prev;
+    sentinel.prev = lastNode.prev; //sets previous of sentinel to the node previous to lastNode
+    lastNode.item = null;
+    lastNode = lastNode.prev;
+    lastNode.next = sentinel;
   }
 
   /**
