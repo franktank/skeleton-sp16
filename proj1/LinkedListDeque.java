@@ -99,17 +99,39 @@ public class LinkedListDeque<Item> {
     }
   }
 
+  /**
+  front = sentinel.next;
+  Sentinel.next = front.next;
+  front.next.prev = sentinel;
+  front.item = null;
+  front = front.next;
+  */
   public Item removeFirst() {
 
   }
 
+  /**
+  last = sentinel.prev;
+  sentinel.prev = last.prev;
+  last.prev.next = sentinel;
+  last.item = null;
+  last = sentinel.prev;
+  */
   public Item removeLast() {
 
   }
 
+  /**
+  If empty list return sentinel?
+  decrement index as it traverses, or until reaches last item in list? <- return item
+  */
   public Item get(int index) {
-    while (sentinel.next != sentinel) {
-
+    Node tempPtr = sentinel;
+    int counter = index;
+    while (tempPtr != sentinel || counter > 1) {
+      tempPtr.next = tempPtr;
+      counter--;
     }
+    return tempPtr.item;
   }
  }
