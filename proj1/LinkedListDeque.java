@@ -19,32 +19,24 @@ public class LinkedListDeque<Item> {
     sentinel = new Node(null, null, null);
   }
 
-  public LinkedListDeque(Item toAdd) {
-    size = 1;
-    sentinel = new Node(null, null, null);
-    sentinel.next = new Node(x, sentinel, null);
-    //Point sentinel.prev to end of list
-    Node end = sentinel;
-    while (sentinel.next != null) {
-      end = sentinel.next;
-    }
-    sentinel.prev = end;
-
-  }
-
+  /*
   public Item getRecursive(int index) {
     //prob needs a helper function
   }
+  */
+
   //handle empty list
   public void addFirst(Item toAdd) {
     if (sentinel.next == null) {
-      sentinel.next = new Node(toAdd, sentinel, null);
+      sentinel.next = new Node(toAdd, sentinel, sentinel);
       //Point sentinel.prev to end of list
       Node end = sentinel;
-      while (sentinel.next != null) {
+      while (end.next.item != null) {
         end = sentinel.next;
       }
       sentinel.prev = end;
+      size++;
+
     } else {
       Node oldFrontNode = sentinel.next;
       Node newNode = new Node(toAdd, sentinel, oldFrontNode);
@@ -56,19 +48,23 @@ public class LinkedListDeque<Item> {
   //change sentinel.prev to point to new Node
   //find last node and set to OldLast
   //OldLast.next = newNode
+  //special case of size = 1??
   public void addLast(Item toAdd) {
     //If empty list.
     if (sentinel.next == null) {
-      sentinel.next = new Node(toAdd, sentinel, null);
+      sentinel.next = new Node(toAdd, sentinel, sentinel);
       //Point sentinel.prev to end of list
       Node end = sentinel;
-      while (sentinel.next != null) {
+      //end.next or sentinel.next
+      while (end.next.item != null) {
         end = sentinel.next;
       }
       sentinel.prev = end;
+      size++;
     } else {
       Node oldLastNode = sentinel.prev;
       Node newNode = new Node(toAdd, oldLastNode, sentinel);
+      oldLastNode.next = newNode;
       sentinel.prev = newNode;
       size++;
     }
@@ -91,53 +87,62 @@ public class LinkedListDeque<Item> {
     if (sentinel.next == null) {
       System.out.println("Empty List!");
     } else {
-      printThis = sentinel;
-      while (printThis.next != sentinel) {
+      Node printThis = sentinel.next;
+      while (printThis != sentinel) {
         System.out.println("Item: " + printThis.item);
         printThis = printThis.next;
       }
     }
   }
 
-  /**
-  front = sentinel.next;
-  Sentinel.next = front.next;
-  front.next.prev = sentinel;
-  front.item = null;
-  front = front.next;
-  */
+  //Removes first node from the list and returns the value
   public Item removeFirst() {
 
     if (sentinel.next == null) {
       System.out.println("Empty list!");
+      return sentinel.item;
+    } else if(size == 1) {
+      Node frontNode = sentinel.next;
+      sentinel.next = null;
+      sentinel.prev = null;
+      return frontNode.item;
     } else {
-      firstNode = sentinel.next;
+      Node firstNode = sentinel.next;
+      Node returnNode = sentinel.next;
       sentinel.next = firstNode.next;
       firstNode.next.prev = sentinel;
       firstNode.item = null;
       firstNode = firstNode.next;
+      size--;
+      return returnNode.item;
     }
-
   }
 
-  /**
-  last = sentinel.prev;
-  sentinel.prev = last.prev;
-  last.prev.next = sentinel;
-  last.item = null;
-  last = sentinel.prev;
-  */
+  //Removes last node from list and returns the value
   public Item removeLast() {
-    lastNode = sentinel.prev;
-    sentinel.prev = lastNode.prev; //sets previous of sentinel to the node previous to lastNode
-    lastNode.item = null;
-    lastNode = lastNode.prev;
-    lastNode.next = sentinel;
+    if (sentinel.prev == null) {
+      System.out.println("Empty list!");
+      return sentinel.item;
+    } else if (size == 1) {
+      Node lastNode = sentinel.prev;
+      sentinel.next = null;
+      sentinel.prev = null;
+      return lastNode.item;
+    } else {
+      Node lastNode = sentinel.prev;
+      Node returnNode = sentinel.prev;
+      sentinel.prev = lastNode.prev; //sets previous of sentinel to the node previous to lastNode
+      lastNode.item = null;
+      lastNode = lastNode.prev;
+      lastNode.next = sentinel;
+      size--;
+      return returnNode.item;
+   }
   }
 
   /**
-  If empty list return sentinel?
-  decrement index as it traverses, or until reaches last item in list? <- return item
+  Gets ith item in the list, index starts at 1
+  0 would get the sentinel
   */
   public Item get(int index) {
     Node tempPtr = sentinel;
@@ -148,4 +153,5 @@ public class LinkedListDeque<Item> {
     }
     return tempPtr.item;
   }
+
  }
