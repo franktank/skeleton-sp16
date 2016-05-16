@@ -19,12 +19,20 @@ public class LinkedListDeque<Item> {
     sentinel = new Node(null, null, null);
   }
 
-  /*
-  public Item getRecursive(int index) {
-    //prob needs a helper function
-  }
-  */
 
+  public Item getRecursive(int index) {
+    //Need to test, sentinel or sentinel.next
+    //Start of index should be 1; (1st item that is not sentinel)
+    return getHelper(index, sentinel);
+  }
+
+  private Item getHelper (int counter, Node currItem) {
+    if (counter == 1 ) {
+      return currItem.next.item;
+    } else {
+      return getHelper(counter - 1, currItem.next);
+    }
+  }
   //handle empty list
   public void addFirst(Item toAdd) {
     if (sentinel.next == null) {
@@ -55,7 +63,6 @@ public class LinkedListDeque<Item> {
       sentinel.next = new Node(toAdd, sentinel, sentinel);
       //Point sentinel.prev to end of list
       Node end = sentinel;
-      //end.next or sentinel.next
       while (end.next.item != null) {
         end = sentinel.next;
       }
@@ -97,7 +104,6 @@ public class LinkedListDeque<Item> {
 
   //Removes first node from the list and returns the value
   public Item removeFirst() {
-
     if (sentinel.next == null) {
       System.out.println("Empty list!");
       return sentinel.item;
@@ -153,5 +159,4 @@ public class LinkedListDeque<Item> {
     }
     return tempPtr.item;
   }
-
  }
