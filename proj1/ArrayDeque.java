@@ -18,11 +18,16 @@ public class ArrayDeque<Item> {
   }
 
   private void resize(int capacity) {
-
+    Item[] a = (Item[]) new Object[capacity];
+    System.arraycopy(items, 0, a, 0, size);
+    items = a;
+    sizeOfArray = capacity;
+    nextFirst = size * RFACTOR - 1;
+    nextLast = size;
   }
   public void addFirst(Item item) {
     if (size == sizeOfArray ) {
-      //resize
+      resize(size * RFACTOR);
     }
     items[nextFirst] = item;
     nextFirst--;
@@ -34,7 +39,7 @@ public class ArrayDeque<Item> {
 
   public void addLast(Item item) {
     if (size == sizeOfArray) {
-      //resize
+      resize(size * RFACTOR);
     }
     items[nextLast] = item;
     nextLast++;
