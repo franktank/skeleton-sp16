@@ -1,33 +1,31 @@
 public class Palindrome {
   public static Deque<Character> wordToDeque(String word) {
-    Deque<Character> wordDeque = new LinkedListDeque<Character>;
+    LinkedListDequeSolution<Character> charDeque = new LinkedListDequeSolution<>();
     for (int i = 0; i < word.length; i++) {
-      wordDeque.addLast(word[i]);
+      charDeque.addLast(word.charAt(i));
     }
-    return wordDeque;
+    return (Deque)charDeque;
   }
 
   public static boolean isPalindrome(String word) {
-    boolean isPal = true;
-
-    Deque<Character> returnDeque = wordToDeque(word);
-
-    Node prev = returnDeque.sentinel.prev;
-    Node next = returnDeque.sentinel.next;
-
-    for (int i = 0; i < returnDeque.size()/2; i++) {
-        if (prev == next) {
-          isPal = true;
-          prev = prev.prev;
-          next = next.next;
-        } else {
-          isPal = false;
-        }
-    }
-    return isPal;
+    Deque<Character> charDeque = wordToDeque(word);
+    return isPalindrome(charDeque);
   }
 
-  private static boolean isPalindrome(String firstLetter, String secondLetter) {
+  private static boolean isPalindrome(Deque<Character> charDeque) {
     //helper method for recursive call?
+    int charDequeSize = charDeque.size();
+    if (charDequeSize == 0 || charDequeSize == 1) {
+      return true;
+    } else {
+      Character fLetter = charDeque.removeFirst();
+      Character lLetter = charDeque.removeLast();
+      return fletter == lLetter && isPalindrome(charDeque);
+    }
+  }
+
+  public static boolean isPalindrome(String word, CharacterComparator cc) {
+    Deque<Character> charDeque = wordToDeque(word);
+    return isPalindrome(charDeque, cc);
   }
 }
