@@ -38,11 +38,7 @@ public class LinkedListDeque<Item> {
     if (sentinel.next == null) {
       sentinel.next = new Node(toAdd, sentinel, sentinel);
       //Point sentinel.prev to end of list
-      Node end = sentinel;
-      while (end.next.item != null) {
-        end = sentinel.next;
-      }
-      sentinel.prev = end;
+      sentinel.prev = sentinel.next;
       size++;
 
     } else {
