@@ -1,10 +1,18 @@
 // TODO: Make sure to make this class a part of the synthesizer package
 // package <package name>;
+package synthesizer;
+
 import java.util.Iterator;
 
 //TODO: Make sure to make this class and all of its methods public
 //TODO: Make sure to make this class extend AbstractBoundedQueue<t>
-public class ArrayRingBuffer<T>  {
+
+/**
+The ArrayRingBuffer class will do all the real work by extending AbstractBoundedQueue. 
+That means we can happily inherit capacity(), fillCount(), isEmpty(), and isFull() without having to override these, 
+but we'll need to override all of the the abstract methods. 
+*/
+public class ArrayRingBuffer<T>  extends AbstractBoundedQueue<T> {
     /* Index for the next dequeue or peek. */
     private int first;            // index for the next dequeue or peek
     /* Index for the next enqueue. */
@@ -21,6 +29,11 @@ public class ArrayRingBuffer<T>  {
         //       this.capacity should be set appropriately. Note that the local variable
         //       here shadows the field we inherit from AbstractBoundedQueue, so
         //       you'll need to use this.capacity to set the capacity.
+        rb = (T[]) new Object[capacity];
+        this.capacity = capacity;
+        first = 0;
+        last = 0;
+        fillCount = 0;
     }
 
     /**
@@ -30,6 +43,9 @@ public class ArrayRingBuffer<T>  {
      */
     public void enqueue(T x) {
         // TODO: Enqueue the item. Don't forget to increase fillCount and update last.
+        if (this.capacity == 0) {
+            throw new RuntimeException("Ring buffer overflow");
+        }
     }
 
     /**
